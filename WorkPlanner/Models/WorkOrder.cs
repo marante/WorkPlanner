@@ -13,11 +13,7 @@ namespace WorkPlanner.Models
         public string Address { get; set; }
         public string WorkDescription { get; set; }
         public string Start { get; set; }
-        public DateTime DateOfInvoice { get; set; }
+        public DateTime? DateOfInvoice { get; set; }
         public string Comments { get; set; }
-
-        // Navigation properties
-        public Status Statuses { get; set; }
-        public int StatusesId { get; set; }
     }
 }

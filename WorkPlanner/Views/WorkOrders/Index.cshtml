@@ -1,8 +1,60 @@
-﻿
+﻿@model IEnumerable<WorkPlanner.Models.WorkOrder>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
+<table id="workOrders" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Adress</th>
+            <th>Arbetsbeskrivning</th>
+            <th>Start</th>
+            <th>Fakturerat</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (!String.IsNullOrEmpty(item.Address))
+            {
+                 <tr>
+                    <td>@item.Address</td>
+                     
+                     @if (!String.IsNullOrEmpty(item.WorkDescription))
+                     {
+                         <td>@item.WorkDescription</td>
+                     }
+                     else
+                     {
+                         <td>asd</td>
+                     }
+                     @if (!String.IsNullOrEmpty(item.Start))
+                     {
+                         <td>@item.Start</td>
+                     }
+                     else
+                     {
+                        <td>asd</td>
+                     }
+                     @if (!String.IsNullOrEmpty(item.DateOfInvoice.ToString()))
+                     {
+                         <td>@item.DateOfInvoice.Value.Date.ToString("dd/MM-yyyy")</td>
+                     }
+                     else
+                     {
+                         <td>asd</td>
+                     }
+                 </tr>
+             }
+        }
+    </tbody>
+</table>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#workOrders").DataTable();
+        });
+    </script>
+}
