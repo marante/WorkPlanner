@@ -19,6 +19,11 @@ html {
 }
 body {
     margin: 0;
+    /*
+    background: url(./Images/samuel-zeller-18760.jpg) ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    */
 }
 article,
 aside,
