@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.1.0\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -52,12 +55,21 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -186,11 +198,15 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\MappingProfile.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\WorkOrdersController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\WorkOrdersController.cs" />
+    <Compile Include="Dtos\WorkOrderDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -210,6 +226,30 @@
     <Compile Include="Migrations\201706031953153_DateOfVoiceMadeNullable.Designer.cs">
       <DependentUpon>201706031953153_DateOfVoiceMadeNullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706091059146_ChangedModelsToMatchNavigationProperties.cs" />
+    <Compile Include="Migrations\201706091059146_ChangedModelsToMatchNavigationProperties.Designer.cs">
+      <DependentUpon>201706091059146_ChangedModelsToMatchNavigationProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706091104072_FixedDbOnceAgain.cs" />
+    <Compile Include="Migrations\201706091104072_FixedDbOnceAgain.Designer.cs">
+      <DependentUpon>201706091104072_FixedDbOnceAgain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706091115106_PopulatedStatusTable.cs" />
+    <Compile Include="Migrations\201706091115106_PopulatedStatusTable.Designer.cs">
+      <DependentUpon>201706091115106_PopulatedStatusTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706091157294_DontKnowIfThisWillWork.cs" />
+    <Compile Include="Migrations\201706091157294_DontKnowIfThisWillWork.Designer.cs">
+      <DependentUpon>201706091157294_DontKnowIfThisWillWork.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706091210034_ChangedSomeDataAnnotations.cs" />
+    <Compile Include="Migrations\201706091210034_ChangedSomeDataAnnotations.Designer.cs">
+      <DependentUpon>201706091210034_ChangedSomeDataAnnotations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706091230433_AddedAnotherColumnInWorkOrderModel.cs" />
+    <Compile Include="Migrations\201706091230433_AddedAnotherColumnInWorkOrderModel.Designer.cs">
+      <DependentUpon>201706091230433_AddedAnotherColumnInWorkOrderModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -218,6 +258,7 @@
     <Compile Include="Models\WorkOrder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\WorkOrderFormViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -450,6 +491,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\WorkOrders\Index.cshtml" />
+    <Content Include="Views\WorkOrders\WorkOrderForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -481,6 +523,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706031953153_DateOfVoiceMadeNullable.resx">
       <DependentUpon>201706031953153_DateOfVoiceMadeNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706091059146_ChangedModelsToMatchNavigationProperties.resx">
+      <DependentUpon>201706091059146_ChangedModelsToMatchNavigationProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706091104072_FixedDbOnceAgain.resx">
+      <DependentUpon>201706091104072_FixedDbOnceAgain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706091115106_PopulatedStatusTable.resx">
+      <DependentUpon>201706091115106_PopulatedStatusTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706091157294_DontKnowIfThisWillWork.resx">
+      <DependentUpon>201706091157294_DontKnowIfThisWillWork.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706091210034_ChangedSomeDataAnnotations.resx">
+      <DependentUpon>201706091210034_ChangedSomeDataAnnotations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706091230433_AddedAnotherColumnInWorkOrderModel.resx">
+      <DependentUpon>201706091230433_AddedAnotherColumnInWorkOrderModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

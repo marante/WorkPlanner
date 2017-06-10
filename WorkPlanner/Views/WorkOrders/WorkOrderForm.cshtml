@@ -1,0 +1,58 @@
+﻿@model WorkPlanner.ViewModel.WorkOrderFormViewModel
+@{
+    ViewBag.Title = "WorkOrderForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Address</h2>
+
+@using (Html.BeginForm("Save", "WorkOrders"))
+{
+    @Html.ValidationSummary(true, "Please fix the following errors.")
+    <div class="form-group">
+        @Html.LabelFor(m => m.ObjectNumber)
+        @Html.TextBoxFor(m => m.ObjectNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ObjectNumber)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Address)
+        @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Address)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.WorkDescription)
+        @Html.TextBoxFor(m => m.WorkDescription, "{0:dd/MM/yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.WorkDescription)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Start)
+        @Html.TextBoxFor(m => m.Start, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Start)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Status)
+        @Html.DropDownListFor(m => m.StatusId, new SelectList(Model.Status, "Id", "Name"), "Välj status", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.StatusId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DateOfInvoice)
+        @Html.TextBoxFor(m => m.DateOfInvoice, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.DateOfInvoice)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Comments)
+        @Html.TextBoxFor(m => m.Comments, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Comments)
+    </div>
+
+    @Html.HiddenFor(m => m.Id)
+    @Html.AntiForgeryToken()
+
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+}
+
