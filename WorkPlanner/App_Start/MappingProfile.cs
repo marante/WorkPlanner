@@ -12,8 +12,15 @@ namespace WorkPlanner.App_Start
     {
         public MappingProfile()
         {
+            // Domain to Dto
             Mapper.CreateMap<WorkOrder, WorkOrderDto>();
-            Mapper.CreateMap<WorkOrderDto, WorkOrder>();
+            Mapper.CreateMap<Status, StatusDto>();
+
+            // Dto to Domain
+            Mapper.CreateMap<StatusDto, Status>()
+                .ForMember(c => c.Id, opt => opt.Ignore());
+            Mapper.CreateMap<WorkOrderDto, WorkOrder>()
+                .ForMember(c => c.Id, opt => opt.Ignore());
         }
     }
 }

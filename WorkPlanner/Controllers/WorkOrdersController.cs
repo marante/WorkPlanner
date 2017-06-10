@@ -50,6 +50,16 @@ namespace WorkPlanner.Controllers
             return View("WorkOrderForm", viewModel);
         }
 
+        public ActionResult Details(int id)
+        {
+            var workOrder = _context.WorkOrders.SingleOrDefault(w => w.Id == id);
+
+            if (workOrder == null)
+                return HttpNotFound();
+
+            return View(workOrder);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save(WorkOrder workOrder)

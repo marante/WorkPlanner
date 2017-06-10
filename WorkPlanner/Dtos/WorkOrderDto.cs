@@ -22,6 +22,8 @@ namespace WorkPlanner.Dtos
         [Required]
         public int StatusId { get; set; }
 
+        public StatusDto Status { get; set; }
+
         [Required]
         [StringLength(255)]
         public string WorkDescription { get; set; }
@@ -30,11 +32,9 @@ namespace WorkPlanner.Dtos
         [StringLength(255)]
         public string Start { get; set; }
 
-        [Display(Name = "Fakturerat")]
         public DateTime? DateOfInvoice { get; set; }
 
         [StringLength(255)]
-        [Display(Name = "Kommentarer")]
         public string Comments { get; set; }
     }
 }

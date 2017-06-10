@@ -206,6 +206,7 @@
     <Compile Include="Controllers\Api\WorkOrdersController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\WorkOrdersController.cs" />
+    <Compile Include="Dtos\StatusDto.cs" />
     <Compile Include="Dtos\WorkOrderDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
